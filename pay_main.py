@@ -10,6 +10,8 @@ from wechatpayv3 import SignType, WeChatPay, WeChatPayType
 import json
 import logging
 import os
+import time
+import uuid
 
 # 读取配置文件
 with open('config.json', 'r') as f:
@@ -87,9 +89,10 @@ def pay():
 def pay_jsapi():
     # 以jsapi下单为例，下单成功后，将prepay_id和其他必须的参数组合传递给JSSDK的wx.chooseWXPay接口唤起支付
     out_trade_no = ''.join(sample(ascii_letters + digits, 8))
-    description = 'demo-description'
+    description = '平台充值'
     amount = int(request.args.get('amount'))
-    payer = {'openid': request.args.get('openid')}
+    opend_id = request.args.get('openid')
+    payer = {'openid': opend_id}
     code, message = wxpay.pay(
         description=description,
         out_trade_no=out_trade_no,
@@ -100,8 +103,8 @@ def pay_jsapi():
     result = json.loads(message)
     if code in range(200, 300):
         prepay_id = result.get('prepay_id')
-        timestamp = 'demo-timestamp'
-        noncestr = 'demo-nocestr'
+        timestamp = str(int(time.time()))
+        noncestr = uuid.uuid4().hex
         package = 'prepay_id=' + prepay_id
         paysign = wxpay.sign([APPID, timestamp, noncestr, package])
         signtype = 'RSA'
@@ -121,7 +124,7 @@ def pay_jsapi():
 def pay_h5():
     # 以h5下单为例，下单成功后，将获取的的h5_url传递给前端跳转唤起支付。
     out_trade_no = ''.join(sample(ascii_letters + digits, 8))
-    description = 'demo-description'
+    description = '平台充值'
     amount = int(request.args.get('amount'))
     scene_info = {'payer_client_ip': '1.2.3.4', 'h5_info': {'type': 'Wap'}}
     code, message = wxpay.pay(

@@ -231,6 +231,7 @@ def notify():
 @app.route('/get_openid', methods=['GET'])
 def get_openid():
     code = request.args.get('code')
+    print(f"code:{code} \n")
     if not code:
         return jsonify({'error': 'Missing code parameter.'})
 

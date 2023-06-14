@@ -268,5 +268,9 @@ def request_payment_notify(amount, out_trade_no):
 def serve_verification_file():
     return 'uojEHjZVAqTrxeKU'
 
+@app.route('/MP_verify_X3Cm1ymRHw3bLaQy.txt')
+def serve_verification_file():
+    return 'X3Cm1ymRHw3bLaQy'
+
 if __name__ == '__main__':
     app.run(port=8899)

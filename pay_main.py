@@ -265,11 +265,11 @@ def request_payment_notify(amount, out_trade_no):
     return response
 
 @app.route('/MP_verify_uojEHjZVAqTrxeKU.txt')
-def serve_verification_file():
+def serve_verification_file_1():
     return 'uojEHjZVAqTrxeKU'
 
 @app.route('/MP_verify_X3Cm1ymRHw3bLaQy.txt')
-def serve_verification_file():
+def serve_verification_file_2():
     return 'X3Cm1ymRHw3bLaQy'
 
 if __name__ == '__main__':
